@@ -36,8 +36,15 @@ void insertiondiferent(int *v, int n){
             v[j+1] = v[j];
         }
         
-        v[i+1] = elem;
+        v[j+1] = elem;
     }
+
+    for (int a = 0; a < n; a++)
+    {
+        printf("%d ", v[a]);
+    }
+
+    printf("\n");
     
 }
 
@@ -53,7 +60,9 @@ int main()
         a = scanf("%d", &vetor[count++]);
     }
     
-    insertion(vetor,l, count - 1);
+    //insertion(vetor,l, count - 1);
+
+    insertiondiferent(vetor, count - 1);
     
     return 0;
 }

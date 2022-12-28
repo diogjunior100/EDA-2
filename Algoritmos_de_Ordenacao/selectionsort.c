@@ -43,6 +43,13 @@ void selectiondiferent(int *v, int n){
         v[i] = v[min];
         v[min] = x;
     }
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", v[i]);
+    }
+
+    printf("\n");
     
 }
 
@@ -58,7 +65,9 @@ int main()
         a = scanf("%d", &vetor[count++]);
     }
     
-    selectionsort(vetor,l, count - 1);
+    //selectionsort(vetor,l, count - 1);
+
+    selectiondiferent(vetor,count - 1);
     
     return 0;
 }
