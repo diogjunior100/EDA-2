@@ -1,6 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define less(A,B) ((A) <= (B))
+
+void intercala(int *v, int e, int meio, int d){
+
+    int *vtemp = malloc(sizeof(int)*(d-e+1));
+    
+    int i = e, j = meio + 1, k = 0;
+
+    while (i <= meio && j <= d)
+    {
+        if (less(v[i],v[j]))
+        {
+            vtemp[k++] = v[i++];
+        }
+        else{
+            vtemp[k++]= v[j++];
+        }
+    }
+
+    while (i <= meio)
+    {
+        vtemp[k++] = v[i++];
+    }
+    
+    while (j <= d)
+    {
+        vtemp[k++] = v[j++];
+    }
+    
+    k = 0;
+    for (i = e; i <=d; i++)
+    {
+        v[i] = vtemp[k++];
+    }
+    
+    free(vtemp);
+
+}
+
 void mergeSort(int *v, int e, int d){
     if(e >= d){
         return;
@@ -12,55 +51,27 @@ void mergeSort(int *v, int e, int d){
 
 }
 
-void intercala(int *v, int e, int meio, int d){
-    int *v2 = malloc((d-e+1)*sizeof(int));
-    int i = e, j = meio + 1, k = 0;
-
-    while (i <= meio && j <= d)
-    {
-        if (v[i] <= v[i++])
-        {
-            v2[k++] = v[i++];
-        }
-        else{
-            v2[k++]= v[j++];
-        }
-    }
-
-    while (i <= meio)
-    {
-        v2[k++] = v[i++];
-    }
-    
-    while (j <= d)
-    {
-        v2[k++] = v[i++];
-    }
-    
-    for (k=0, i=e; i <= d; k++, i++)
-    {
-        v[i] = v2[k];
-    }
-    
-    free(v2);
-
-}
 
 
 int main()
 {
-    Item vetor[1001];
+    int vetor[100000];
     int count = 0, l = 0;
-    int a = 1;
 
-    while (a != EOF)
+   while (scanf("%d", &vetor[count]) != EOF)
     {
-        a = scanf("%d", &vetor[count++]);
+        //a = scanf("%d", &vetor[count]);
+        count++;
     }
     
-    insertion(vetor,l, count - 1);
+    mergeSort(vetor, l, count - 1);
 
-    insertiondiferent(vetor, count - 1);
+    for (int i = 0; i < count ; i++)
+    {
+        printf("%d ", vetor[i]);
+    }
+    
+    printf("\n");
     
     return 0;
 }
