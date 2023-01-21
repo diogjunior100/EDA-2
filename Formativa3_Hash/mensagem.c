@@ -13,9 +13,8 @@ typedef struct Item
 #define eq(a, b) (a.k == b.k)
 
 #ifdef STRING_HASH
-#define INITIAL_HASH_VALUE 5381
-#define MULT_HASH_VALUE 33
-
+#define INITIAL_HASH_VALUE 5400
+#define MULT_HASH_VALUE 45
 unsigned hashu(const char *x)
 {
     unsigned h = INITIAL_HASH_VALUE;
@@ -23,7 +22,6 @@ unsigned hashu(const char *x)
         h = (h * MULT_HASH_VALUE + x[i]) % HT_SIZE;
     return h;
 }
-
 #define key_t const char *
 #define hash_k(k) (hashu(k))
 #define eq_k(x, k) (strcmp(key(x), k) == 0)
@@ -173,13 +171,10 @@ int HT_contains(HashTable ht, Item x)
     return 0;
 }
 
-
-int main()
-{
+void resolver(){
     HashTable ht = HT_init();
     Item item;
     unsigned mn = 1 << 31, mx = 0;
-
     while (scanf(" %d %c", &item.k, &item.v) == 2)
     {
         HT_insert(&ht, item);
@@ -194,6 +189,11 @@ int main()
             printf("%c", li->item.v);
     }
     printf("\n");
+
+}
+int main()
+{
+    resolver();
 
     return 0;
 }
