@@ -40,7 +40,7 @@ int main() {
 
     Pistas *p = primeira;
 
-    /*for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         while (p != NULL) 
         {
@@ -48,7 +48,7 @@ int main() {
             p = p->prox;
             printf("%d\n", p->identificador);
         }
-    }*/
+    }
     p = p->prox;
     printf("%d\n", p->valor);
 
