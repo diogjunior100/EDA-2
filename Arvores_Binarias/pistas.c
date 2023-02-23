@@ -1,62 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct pista {
-    int identificador; 
-    int valor; //valor da pista
-    struct pista *prox; //endereco da proxima pista
-} Pistas;
+typedef struct{
+  int valor;
+  int identificador;
+  int prox;
+}Item;
 
-int main() {
-    int n;
-    scanf("%d", &n);
+typedef struct no no;
 
-    // criar a lista ligada
-    Pistas *primeira = NULL;
-    Pistas *ultima = NULL;
+struct no{
+  Item e;
+  no *prox;
+};
 
-    for (int i = 0; i < n; i++) 
-    {
-        int id, valor, prox_id;
-        scanf("%d %d %d", &id, &valor, &prox_id);
+typedef struct{
+  no *inicio;
+  int no_count;
+  no *ultimo;
+}cabeca_st;
 
-        Pistas *nova_pista = (Pistas*) malloc(sizeof(Pistas));
-        nova_pista->identificador = id;
-        nova_pista->valor = valor;
-        nova_pista->prox = NULL;
-
-        if (primeira == NULL) 
-        {
-            primeira = nova_pista;
-            ultima = nova_pista;
-        } 
-        else 
-        {
-            ultima->prox = nova_pista;
-            ultima = nova_pista;
-        }
-    }
-
-
-    Pistas *p = primeira;
-
-        while (p != NULL) 
-        {
-            printf("%d ", p->valor);
-            p = p->prox;
-            printf("%d\n", p->identificador);
-        }
-        
-    p = p->prox;
-    printf("%d\n", p->valor);
-
-    p = primeira;
-    while (p != NULL) 
-    {
-        Pistas *prox = p->prox;
-        free(p);
-        p = prox;
-    }
-
-    return 0;
+int inicializaLista(cabeca_st *h){
+  h->inicio = NULL;
+  h->ultimo = NULL;
+  h->no_count = 0;
+  return 1;
 }
+
+int insere_inicio(cabeca_st *h, Item e){
+  no *novo = malloc(sizeof(no));
+
+  if(novo == NULL) return 0;
+
+  novo->e = e;
+  novo->prox = h->inicio;
+
+  h->inicio = novo;
+  h->no_count++;
+
+  return 1;
+}
+
+void removeInicio(cabeca_st *h){
+  printf("%d\n", h->inicio->e.valor);
+  h->inicio = h->inicio->prox;
+  h->no_count--;
+  return;
+}
+
+int main(void){
+  int n;
+  scanf("%d", &n);
+  Item item[n];
+
+  cabeca_st h;
+  inicializaLista(&h);
+
+  for(int i = 0; i<n; i++){
+    scanf("%d %d %d", &item[i].identificador, &item[i].valor, &item[i].prox);
+    if(item[i].prox == -1){
+      insere_inicio(&h, item[i]);
+    }
+  }
+
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < n; j++){
+      if(item[j].prox == h.inicio->e.identificador){
+        insere_inicio(&h, item[j]);
+      }
+    }
+  }
+
+  for(int i = 0; i < n; i++){
+    removeInicio(&h);
+  }
+
+  return 0;
+
+} 
+
